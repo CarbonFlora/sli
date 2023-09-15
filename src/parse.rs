@@ -27,25 +27,30 @@ impl Slideshow {
     pub fn new() -> Self {
         Slideshow { slides: Vec::new() }
     }
+
+    pub fn from_path(input_file: &String) -> Result<Self> {
+        let input_file = File::open(input_file)?;
+        let mut slide = Slide::new();
+        let mut slideshow = Slideshow::new();
+
+        for line in BufReader::new(input_file)
+            .lines()
+            .map(|x| x.unwrap_or_default())
+        {
+            if line.starts_with("---") {
+                slideshow.slides.push(slide.clone());
+                slide = Slide::new();
+                continue;
+            }
+            slide.lines.push(line);
+        }
+        Ok(slideshow)
+    }
 }
 
 pub fn slides() -> Result<()> {
     let args = SlidesArgs::parse();
-    let input_file = File::open(args.input_file)?;
-    let mut slide = Slide::new();
-    let mut slideshow = Slideshow::new();
-
-    for line in BufReader::new(input_file)
-        .lines()
-        .map(|x| x.unwrap_or_default())
-    {
-        if line.starts_with("---") {
-            slideshow.slides.push(slide.clone());
-            slide = Slide::new();
-            continue;
-        }
-        slide.lines.push(line);
-    }
+    let slideshow = Slideshow::from_path(&args.input_file)?;
 
     Ok(())
 }
