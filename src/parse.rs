@@ -46,11 +46,9 @@ impl Slideshow {
         }
         Ok(slideshow)
     }
-}
 
-pub fn slides() -> Result<()> {
-    let args = SlidesArgs::parse();
-    let slideshow = Slideshow::from_path(&args.input_file)?;
-
-    Ok(())
+    pub fn from_cli() -> Result<Self> {
+        let args = SlidesArgs::parse();
+        Ok(Slideshow::from_path(&args.input_file)?)
+    }
 }
