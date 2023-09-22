@@ -19,13 +19,15 @@ impl Slide {
     }
 }
 
+#[derive(Default)]
 pub struct Slideshow {
     pub slides: Vec<Slide>,
+    pub index: usize,
 }
 
 impl Slideshow {
     pub fn new() -> Self {
-        Slideshow { slides: Vec::new() }
+        Slideshow::default()
     }
 
     pub fn from_path(input_file: &String) -> Result<Self> {

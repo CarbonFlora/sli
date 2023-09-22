@@ -20,9 +20,24 @@ impl Slideshow {
     }
 
     fn execute_key(&mut self, key_event: KeyEvent) -> ControlFlow<()> {
-        return match key_event.code {
-            KeyCode::Char('q') => ControlFlow::Break(()),
-            _ => ControlFlow::Continue(()),
+        match key_event.code {
+            KeyCode::Char('q') => return ControlFlow::Break(()),
+            KeyCode::Char('j') | KeyCode::Char('l') | KeyCode::Char(' ') => self.next_slide(),
+            KeyCode::Char('k') | KeyCode::Char('h') | KeyCode::Backspace => self.previous_slide(),
+            _ => (),
         };
+        return ControlFlow::Continue(());
+    }
+
+    fn next_slide(&mut self) {
+        if self.index < self.slides.len() {
+            self.index += 1;
+        }
+    }
+
+    fn previous_slide(&mut self) {
+        if self.index > 0 {
+            self.index -= 1;
+        }
     }
 }
