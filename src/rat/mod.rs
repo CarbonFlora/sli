@@ -39,7 +39,7 @@ fn setup_terminal() -> Result<Terminal> {
 fn run(terminal: &mut Terminal) -> Result<()> {
     let mut cache = Slideshow::from_cli()?;
     loop {
-        terminal.draw(ui)?;
+        terminal.draw(|f| ui(f, &cache))?;
         if Slideshow::handle_events(&mut cache)?.is_break() {
             return Ok(());
         }
