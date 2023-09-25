@@ -46,6 +46,11 @@ impl Slideshow {
             }
             slide.lines.push(line);
         }
+        if slideshow.slides.len() == 0 {
+            slideshow.slides.push(Slide {
+                lines: vec!["End of Presentation.".to_string()],
+            })
+        }
         Ok(slideshow)
     }
 
