@@ -1,11 +1,3 @@
-use ratatui::{
-    prelude::*,
-    widgets::{
-        block::{Position, Title},
-        Block, BorderType, Borders, Padding, Paragraph, Wrap,
-    },
-};
-
 use crate::parse::Slide;
 
 impl Slide {
