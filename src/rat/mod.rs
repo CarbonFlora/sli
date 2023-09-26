@@ -1,4 +1,5 @@
 ﻿pub mod handler;
+pub mod slide;
 pub mod ui;
 
 use crate::{parse::Slideshow, rat::ui::ui};

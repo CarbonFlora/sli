@@ -3,11 +3,12 @@ use ratatui::{
     prelude::*,
     widgets::{
         block::{Position, Title},
-        Block, BorderType, Borders, Padding, Paragraph, Wrap,
+        Block, Borders, Paragraph, Wrap,
     },
 };
-use std::{io::Stdout, time::TryFromFloatSecsError};
+use std::io::Stdout;
 
+const AUTHOR: &str = "Zi Hao Liang";
 use crate::parse::Slideshow;
 
 type Frame<'a> = ratatui::Frame<'a, CrosstermBackend<Stdout>>;
@@ -40,8 +41,8 @@ impl Slideshow {
     }
 
     fn current_slide(&self) -> Paragraph {
-        let paragraph = Paragraph::new("The Quick brown gox jumped over the lazy dog.")
-            .wrap(Wrap { trim: true });
+        let slide = &self.slides[self.index];
+        let paragraph = Paragraph::new(slide.render()).wrap(Wrap { trim: true });
 
         paragraph
     }
@@ -50,7 +51,7 @@ impl Slideshow {
         let block = Block::new()
             .borders(Borders::ALL)
             .title(
-                Title::from("Zi Hao Liang")
+                Title::from(AUTHOR)
                     .position(Position::Bottom)
                     .alignment(Alignment::Left),
             )

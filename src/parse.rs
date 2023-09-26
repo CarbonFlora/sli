@@ -31,14 +31,11 @@ impl Slideshow {
     }
 
     pub fn from_path(input_file: &String) -> Result<Self> {
-        let input_file = File::open(input_file)?;
+        let file = File::open(input_file)?;
         let mut slide = Slide::new();
         let mut slideshow = Slideshow::new();
 
-        for line in BufReader::new(input_file)
-            .lines()
-            .map(|x| x.unwrap_or_default())
-        {
+        for line in BufReader::new(file).lines().map(|x| x.unwrap_or_default()) {
             if line.starts_with("---") {
                 slideshow.slides.push(slide.clone());
                 slide = Slide::new();
@@ -48,7 +45,10 @@ impl Slideshow {
         }
         if slideshow.slides.len() == 0 {
             slideshow.slides.push(Slide {
-                lines: vec!["End of Presentation.".to_string()],
+                lines: vec![
+                    "Please use --- to dictate a new slide. The last slide also requires a ---."
+                        .to_string(),
+                ],
             })
         }
         Ok(slideshow)
