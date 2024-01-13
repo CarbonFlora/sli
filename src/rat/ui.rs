@@ -48,8 +48,15 @@ impl Slideshow {
     }
 
     fn render_slide_borders(&self, paragraph: Paragraph, frame: &mut Frame, area: Rect) {
+        let padding_thickness = 1u16;
         let block = Block::new()
             .borders(Borders::ALL)
+            .padding(ratatui::widgets::Padding {
+                left: padding_thickness,
+                right: padding_thickness,
+                top: padding_thickness,
+                bottom: padding_thickness,
+            })
             .title(
                 Title::from(AUTHOR)
                     .position(Position::Bottom)
